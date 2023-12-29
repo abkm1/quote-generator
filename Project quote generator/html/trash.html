@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trash</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    
+</head>
+<body>
+    <header>
+        <a href="./main.html"><img src="../ressources/video_anm-removebg-preview-removebg-preview.png" alt=""></a>
+        <h2 class="quotelib">Quote's Trash</h2>
+    </header>
+    <div class="librarylist">
+
+        <ul id="trash"></ul>
+        <div class="clear"> 
+            <a href="../html/library.html"><button id="clear">Go back to library</button></a> 
+            <button id="cleartr">Clear all</button>
+        </div>
+
+    </div>
+    <script>
+      var thelist=document.getElementById("trash")
+
+     function addtrash(quote){
+        
+        let li = document.createElement("li");
+        li.classList.add("element");
+        let textquote=document.createElement("h2");
+        textquote.classList.add("textquote");
+        let authtext=document.createElement("h3");
+        authtext.classList.add("authtext");
+        let supprime=document.createElement("i");
+        supprime.classList.add('fas', 'fa-trash');
+        let rotate=document.createElement("i");
+        rotate.classList.add('fas', 'fa-rotate-left')
+        rotate.classList.add("supprime");
+        rotate.classList.add("rotate")
+        supprime.classList.add("supprime");
+        textquote.innerText=quote.thequote;
+        authtext.innerText=quote.theauthor;
+        li.appendChild(textquote);
+        li.appendChild(authtext);
+        li.appendChild(supprime);
+        li.appendChild(rotate)
+        thelist.appendChild(li);
+
+         // function for remove one element
+        supprime.addEventListener("click",remove); 
+        function remove(){
+            li.remove();
+            let tab = JSON.parse(localStorage.getItem("trashQuotes"));
+            tab.splice(tab.indexOf(quote),1);
+            localStorage.setItem("trashQuotes",JSON.stringify(tab));
+            console.log(tab);
+            // send it trash page****
+
+        }
+        rotate.addEventListener('click',remove);
+        rotate.addEventListener('click',function(){
+            const arr = JSON.parse(localStorage.getItem("FavQuotes")) || [];
+           arr.push({quote: quote.thequote, author: quote.theauthor});
+           localStorage.setItem("FavQuotes", JSON.stringify(arr));
+        });
+        var clear=document.getElementById("cleartr");
+        clear.addEventListener('click',function(){
+            li.remove();
+            let tab = JSON.parse(localStorage.getItem("trashQuotes"));
+            tab.splice(tab.indexOf(quote),tab.lenght);
+            console.log(tab);
+            tab=[];
+            localStorage.setItem("trashQuotes",JSON.stringify(tab));
+        })
+     }
+       const tab = JSON.parse(localStorage.getItem("trashQuotes"));
+      // call the function "ajouter"
+      tab.forEach( quote => addtrash(quote));
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    
+</head>
+<body class="login-body">
+    
+    <div class="login-box">
+         <h2>Registration</h2>
+        <form action=""> 
+              <div class="input-box">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="inputuser">
+                <label for="">Username</label>
+              </div>
+              <div class="input-box">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="text" id="inputemail">
+                <label for="">Email</label>
+              </div>
+              <div class="input-box">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="inputpw">
+                <label for="">Password</label>
+              </div>
+              <div class="remember-forget">
+                <label for=""><input type="checkbox" name="" id="">I agree to the terms & conditions </label>
+              </div>
+              <button class="btlogin" type="submit" id="registerbt"><a href="../html/main.html">Register</a></button>
+              <div class="register-link">
+                <p>Already have an account<a href="../html/login.html">Login</a></p>
+                
+              </div>
+        </form>
+    </div>
+
+
+    <script>
+      const btreg=document.getElementById("registerbt");
+      btreg.addEventListener("click", register);
+      function register(){
+         if (document.getElementById("inputuser").value!=""&& document.getElementById("inputemail").value!=""&& document.getElementById("inputpw").value!="") {
+          const email=document.getElementById("inputemail");
+          function doesLetterExist(email) {
+              return email.value.includes("@");
+          }
+          const passwd= document.getElementById("inputpw");
+          function wordLength(passwd) {
+            return passwd.value.length;
+          }
+          if ( doesLetterExist(email)&& wordLength(passwd)>=8) {
+                  const users = JSON.parse(localStorage.getItem("Users")) || [];
+                  users.push({email:getElementById("inputemail").value,passwd:getElementById("inputpw").value});
+                  localStorage.setItem("Users", JSON.stringify(users));
+                  window.location.href="main.html";
+          } 
+         }
+      }
+      
+      
+    </script>
+</body>
+</html>

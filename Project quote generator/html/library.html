@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=*, initial-scale=1.0">
+    <title>library</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    
+</head>
+<body>
+    <header>
+        <a href="./main.html"><img src="../ressources/video_anm-removebg-preview-removebg-preview.png" alt=""></a>
+        <h2 class="quotelib">Quote Library</h2>
+    </header>
+    <div class="librarylist">
+        <ul id="thelist">
+            <!-- <li class="element" id="elementdelist"><h2 class="textquote" id="text">fvv</h2><h3 class="authtext">author</h3><i id="supprime" class="fa-solid fa-trash supprime" ></i></li>
+             -->
+        </ul>
+        <div class="clear"> <button id="clear">Clear all</button>
+          <a href="../html/trash.html"><button id="clear">Go to quote's Trash</button></a>
+        </div>
+       
+    </div>
+    
+    
+    
+  <script>
+       
+     var thelist=document.getElementById("thelist");
+     
+
+    function ajouter(quotes){
+      const arr = JSON.parse(localStorage.getItem("FavQuotes"));
+      console.log(arr);
+        
+        // create the element
+        let li = document.createElement("li");
+        li.classList.add("element");
+        let textquote=document.createElement("h2");
+        textquote.classList.add("textquote");
+        let authtext=document.createElement("h3");
+        authtext.classList.add("authtext");
+        let supprime=document.createElement("i");
+        supprime.classList.add('fas', 'fa-trash');
+        supprime.classList.add("supprime");
+        textquote.innerText=quotes.quote;
+        authtext.innerText=quotes.author;
+        li.appendChild(textquote);
+        li.appendChild(authtext);
+        li.appendChild(supprime);
+        thelist.appendChild(li);
+
+        // function for remove one element
+        supprime.addEventListener("click",function(){
+            li.remove();  
+            // suprimer les element
+            let arr = JSON.parse(localStorage.getItem("FavQuotes"));
+            arr.splice(arr.indexOf(quotes),1);
+            localStorage.setItem("FavQuotes",JSON.stringify(arr));
+            console.log(arr);
+            // send it trash page****
+            const tab = JSON.parse(localStorage.getItem("trashQuotes")) || [];
+            tab.push({thequote: quotes.quote, theauthor: quotes.author});
+            localStorage.setItem("trashQuotes", JSON.stringify(tab));
+        
+
+        }); 
+       
+      //  function for remove the list
+       var clearbt=document.getElementById("clear");
+       clearbt.addEventListener("click",clear);
+      
+      function clear(){
+         // send it to trash
+         let tab = JSON.parse(localStorage.getItem("trashQuotes"))  
+          tab.push({thequote:quotes.quote, theauthor: quotes.author});
+          localStorage.setItem("trashQuotes", JSON.stringify(tab));
+                             
+        // remove the list
+        li.remove();
+        let arr = JSON.parse(localStorage.getItem("FavQuotes"));
+        arr.splice(arr.indexOf(quotes),arr.lenght);
+        localStorage.setItem("FavQuotes",JSON.stringify(arr));
+        console.log(arr)
+        arr=[];
+        localStorage.setItem("FavQuotes",JSON.stringify(arr));
+        clearbt.innerHTML="quote library is empty"
+      }
+    }
+    // récuperer le tableau depuis favquotes
+    const arr = JSON.parse(localStorage.getItem("FavQuotes"));
+    // call the function "ajouter"
+    arr.forEach( quotes => ajouter(quotes));
+
+  </script>
+</body>
+</html>
